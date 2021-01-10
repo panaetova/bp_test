@@ -1,3 +1,5 @@
+import 'package:app_test/domain/task.dart';
+import 'package:app_test/screens/find_page.dart';
 import 'package:app_test/screens/home_page.dart';
 import 'package:app_test/screens/projects_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,16 +7,19 @@ import 'package:flutter/material.dart';
 
 class BottomMenu extends StatefulWidget {
   final Function(BuildContext) addNewTask;
+  List tasks;
 
-  BottomMenu(this.addNewTask);
+  BottomMenu(this.addNewTask, this.tasks);
 
   @override
   State<StatefulWidget> createState() {
-    return BottomMenuState();
+    return BottomMenuState(tasks);
   }
 }
 
 class BottomMenuState extends State<BottomMenu> {
+  List tasks;
+  BottomMenuState(this.tasks);
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -33,8 +38,10 @@ class BottomMenuState extends State<BottomMenu> {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TasksList()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TasksList(tasks)));
                 },
                 child: Column(
                   children: <Widget>[
@@ -56,7 +63,7 @@ class BottomMenuState extends State<BottomMenu> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              ProjectList(widget.addNewTask)));
+                              ProjectList(widget.addNewTask, tasks)));
                 },
                 child: Column(
                   children: <Widget>[
@@ -77,7 +84,11 @@ class BottomMenuState extends State<BottomMenu> {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  print('search tap');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              FindScreen(widget.addNewTask, tasks)));
                 },
                 child: Column(
                   children: <Widget>[

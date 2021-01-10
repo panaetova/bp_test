@@ -4,6 +4,7 @@ class Project {
   String title;
   String paragraph;
   List<Task> listOfTasks = List();
+  bool visibilityTasks = false;
 
   Project({this.title, this.paragraph});
 

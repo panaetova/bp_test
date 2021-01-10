@@ -2,18 +2,22 @@ import 'package:app_test/screens/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:app_test/domain/task.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:app_test/screens/app_bottom_menu.dart';
+import 'package:app_test/screens/bottom_menu.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TasksList extends StatefulWidget {
+  List tasks;
+  TasksList(this.tasks);
+
   @override
   State<StatefulWidget> createState() {
-    return TasksListState();
+    return TasksListState(tasks);
   }
 }
 
 class TasksListState extends State<TasksList> {
-  ListOfTasks tasks = new ListOfTasks();
+  List<Task> tasks;
+  TasksListState(this.tasks);
   String inputTitle;
   String filterType = "today";
   CalendarController controller = new CalendarController();
@@ -37,12 +41,11 @@ class TasksListState extends State<TasksList> {
         child: ListView.builder(
             shrinkWrap: true,
             padding: EdgeInsets.only(left: 35.0),
-            itemCount:
-                tasks.getListOfTasks.elementAt(index).getListOfPodtasks.length,
+            itemCount: tasks.elementAt(index).getListOfPodtasks.length,
             itemBuilder: (BuildContext context, int i) {
               return CheckboxListTile(
                 value: false,
-                title: Text(tasks.getListOfTasks
+                title: Text(tasks
                     .elementAt(index)
                     .getListOfPodtasks
                     .elementAt(i)
@@ -58,14 +61,14 @@ class TasksListState extends State<TasksList> {
     return Padding(
       padding: EdgeInsets.only(top: 60),
       child: ListView.builder(
-          itemCount: tasks.getListOfTasks.length,
+          itemCount: tasks.length,
           itemBuilder: (BuildContext context, int i) {
             return Slidable(
               actionPane: SlidableDrawerActionPane(),
               actionExtentRatio: 0.3,
               child: Column(children: <Widget>[
                 ListTile(
-                  title: Text(tasks.getListOfTasks.elementAt(i).title),
+                  title: Text(tasks.elementAt(i).title),
                   tileColor: Colors.white,
                   contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
                   onTap: () => showInfoAboutTask(i, context),
@@ -74,7 +77,7 @@ class TasksListState extends State<TasksList> {
                       highlightColor: Colors.green,
                       onPressed: () {
                         setState(() {
-                          tasks.getListOfTasks.removeAt(i);
+                          tasks.removeAt(i);
                         });
                       }),
                   // ),
@@ -119,11 +122,11 @@ class TasksListState extends State<TasksList> {
                     onChanged: (value) {
                       Navigator.pop(context);
                       setState(() {
-                        tasks.getListOfTasks.removeAt(index);
+                        tasks.removeAt(index);
                       });
                     }),
                 Text(
-                  tasks.getListOfTasks.elementAt(index).getTitle,
+                  tasks.elementAt(index).getTitle,
                   style: TextStyle(fontSize: 20),
                 )
               ]),
@@ -192,7 +195,7 @@ class TasksListState extends State<TasksList> {
                                                   icon: Icon(Icons.send),
                                                   onPressed: () {
                                                     setState(() {
-                                                      tasks.getListOfTasks
+                                                      tasks
                                                           .elementAt(index)
                                                           .getListOfPodtasks
                                                           .add(inputTitle);
@@ -299,7 +302,7 @@ class TasksListState extends State<TasksList> {
                                   setState(() {
                                     Task task = new Task();
                                     task.title = inputTitle;
-                                    tasks.getListOfTasks.add(task);
+                                    tasks.add(task);
                                   });
                                   Navigator.of(context).pop();
                                 },
@@ -394,7 +397,7 @@ class TasksListState extends State<TasksList> {
           taskWidget(),
         ],
       ),
-      bottomNavigationBar: BottomMenu(this.addNewTask),
+      bottomNavigationBar: BottomMenu(this.addNewTask, tasks),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xFF2c6992),
           splashColor: Color(0xFF4690c1),

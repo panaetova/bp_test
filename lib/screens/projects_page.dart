@@ -1,5 +1,6 @@
 import 'package:app_test/domain/project.dart';
-import 'package:app_test/screens/app_bottom_menu.dart';
+import 'package:app_test/domain/task.dart';
+import 'package:app_test/screens/bottom_menu.dart';
 import 'package:app_test/screens/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +8,22 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ProjectList extends StatefulWidget {
   final Function(BuildContext) addNewTask;
+  List tasks;
 
-  ProjectList(this.addNewTask);
+  ProjectList(this.addNewTask, this.tasks);
 
   @override
   State<StatefulWidget> createState() {
-    return ProjectListState();
+    return ProjectListState(tasks);
   }
 }
 
 class ProjectListState extends State<ProjectList> {
+  List tasks;
+  ProjectListState(this.tasks);
+
   ListOfProjects projects = new ListOfProjects();
   String inputTitle;
-  bool _visible = true;
 
   Widget createAppBar(String name) {
     return AppBar(
@@ -116,11 +120,27 @@ class ProjectListState extends State<ProjectList> {
                         Text(projects.getListOfProjects.elementAt(i).getTitle),
                     trailing: IconButton(
                       icon: Icon(Icons.arrow_downward),
-                      onPressed: () {},
+                      onPressed: () => setState(() => projects.getListOfProjects
+                              .elementAt(i)
+                              .visibilityTasks =
+                          !projects.getListOfProjects
+                              .elementAt(i)
+                              .visibilityTasks),
                     ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
                   ),
-                  Divider(height: 2.0, color: Colors.grey)
+                  Divider(height: 2.0, color: Colors.grey),
+                  Visibility(
+                    child: CheckboxListTile(
+                      value: false,
+                      title: Text("hello"),
+                      onChanged: (value) {
+                        value = true;
+                      },
+                    ),
+                    visible:
+                        projects.getListOfProjects.elementAt(i).visibilityTasks,
+                  )
                 ],
               ));
         });
@@ -133,7 +153,10 @@ class ProjectListState extends State<ProjectList> {
       appBar: createAppBar('Projects'),
       drawer: AppDrawer(),
       body: showListOfProjects(),
-      bottomNavigationBar: BottomMenu(widget.addNewTask),
+      bottomNavigationBar: BottomMenu(
+        widget.addNewTask,
+        tasks,
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Color(0xFF2c6992),
           splashColor: Color(0xFF4690c1),

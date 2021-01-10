@@ -10,14 +10,19 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  List<Task> tasks = List();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'I want coffee',
+      initialRoute: '/',
       theme: ThemeData(
           primaryColor: Colors.white,
           textTheme: TextTheme(title: TextStyle(color: Colors.white))),
-      home: TasksList(),
+      routes: {
+        '/': (context) => TasksList(tasks),
+      },
     );
   }
 }

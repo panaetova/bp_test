@@ -5,6 +5,7 @@ class Task {
   String title;
   List<String> listOfPodtasks = List();
   String date;
+  String projectName;
 
   List<String> get getListOfPodtasks => listOfPodtasks;
 
