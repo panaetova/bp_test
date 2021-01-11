@@ -1,8 +1,5 @@
-import 'package:app_test/screens/projects_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app_test/screens/home_page.dart';
-import 'package:app_test/screens/landing.dart';
-import 'package:app_test/screens/login.dart';
 import 'domain/task.dart';
 
 void main() {
@@ -19,6 +16,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       theme: ThemeData(
           primaryColor: Colors.white,
+          // ignore: deprecated_member_use
           textTheme: TextTheme(title: TextStyle(color: Colors.white))),
       routes: {
         '/': (context) => TasksList(tasks),

@@ -1,4 +1,3 @@
-import 'package:app_test/domain/task.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app_test/screens/bottom_menu.dart';
