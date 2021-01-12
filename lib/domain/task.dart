@@ -4,6 +4,7 @@ class Task {
   List<String> listOfPodtasks = List();
   String date;
   String projectName;
+  bool isCompleted = false;
 
   List<String> get getListOfPodtasks => listOfPodtasks;
 

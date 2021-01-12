@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app_test/screens/bottom_menu.dart';
+import 'package:app_test/widgets/bottom_menu.dart';
 
 class FindScreen extends StatefulWidget {
   final Function(BuildContext) addNewTask;

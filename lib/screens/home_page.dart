@@ -2,7 +2,7 @@ import 'package:app_test/screens/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:app_test/domain/task.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:app_test/screens/bottom_menu.dart';
+import 'package:app_test/widgets/bottom_menu.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class TasksList extends StatefulWidget {
@@ -66,27 +66,30 @@ class TasksListState extends State<TasksList> {
             return Slidable(
               actionPane: SlidableDrawerActionPane(),
               actionExtentRatio: 0.3,
-              child: Column(children: <Widget>[
-                ListTile(
-                  title: Text(tasks.elementAt(i).title),
-                  tileColor: Colors.white,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
-                  onTap: () => showInfoAboutTask(i, context),
-                  leading: new IconButton(
-                      icon: new Icon(Icons.radio_button_off),
-                      highlightColor: Colors.green,
-                      onPressed: () {
-                        setState(() {
-                          tasks.removeAt(i);
-                        });
-                      }),
-                  // ),
-                ),
-                Divider(
-                  color: Colors.grey,
-                  height: 2.0,
-                ),
-              ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ListTile(
+                      title: Text(tasks.elementAt(i).title),
+                      tileColor: Colors.white,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
+                      onTap: () => showInfoAboutTask(i, context),
+                      leading: new IconButton(
+                          icon: new Icon(tasks.elementAt(i).isCompleted == false
+                              ? Icons.radio_button_off
+                              : Icons.radio_button_checked),
+                          onPressed: () {
+                            tasks.elementAt(i).isCompleted = true;
+                            setState(() {
+                              tasks.removeAt(i);
+                            });
+                          }),
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      height: 2.0,
+                    ),
+                  ]),
               secondaryActions: [
                 IconSlideAction(
                   caption: 'Edit',

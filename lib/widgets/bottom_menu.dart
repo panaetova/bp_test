@@ -19,6 +19,7 @@ class BottomMenu extends StatefulWidget {
 class BottomMenuState extends State<BottomMenu> {
   List tasks;
   BottomMenuState(this.tasks);
+
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
